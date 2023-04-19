@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="mystyle.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>Typing test</title>
+</head>
+
+<body>
+    <div class="main_div ">
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <div class="center_div text-center">
+                        <h3>Welcome Typing speed test</h3>
+                        <h2 id="msg"> </h2>
+                        <textarea name="" id="mywords" cols="10" rows="10" class="form-control"
+                            placeholder="Remeber, be nice"></textarea>
+                        <a href="#" id="mainbtn" class="btn">Start</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const setOfWords = ["my name is jitendra sharma ",
+            "i hope you like this typin test", "this is my first javascript project",
+            "i m jit presently i m working in my services as a webdesigner",
+            "i have done my bca in 2020",
+            "after that i take certification course in python from samyak institute jaipur",
+            "currently i m looking job in the web development field",
+            "thanks u ask me about myself"];
+        const msg = document.getElementById('msg');
+        const myWords = document.getElementById('mywords');
+        const btn = document.getElementById('mainbtn');
+        let startTime, endTime;
+        const playgames = () => {
+            let randomNum = Math.floor(Math.random() * setOfWords.length);
+            console.log(randomNum);
+            msg.innerText = setOfWords[randomNum];
+            let date = new Date();
+            startTime = date.getTime();
+            btn.innerText = "Done";
+        }
+        const endplay = () => {
+            let date = new Date();
+            endTime = date.getTime();
+            let totalTime = ((endTime - startTime) / 1000);
+            console.log(totalTime)
+
+            let totalstring = myWords.value;
+            let wordCount = wordCounter(totalstring);
+            let speed = Math.round((wordCount /totalTime)*60);
+            let finalmessage = "you typed total at " +speed+ " per minutes "
+            finalmessage += compaerWords(msg.innerText,totalstring);
+            msg.innerText = finalmessage;
+        }
+        const compaerWords = (str1,str2) =>{
+            let word1 = str1.split('');
+            let word2 = str2.split('');
+            let cnt = 0;
+
+            // foreach loop
+
+            word1.forEach(function (item,index) {
+                if (item == word2[index]){
+                    cnt++
+                } 
+            });
+            let errword = (word1.length-cnt);
+            return(cnt + " correct out of " + word1.length+ " total number of error are " +errword+".");
+
+
+        }
+        const wordCounter = (str) => {
+            const response = str.toString().split(' ').length;
+            console.log(response);
+            return response;
+
+        }
+        btn.addEventListener('click', function () {
+            if (this.innerText == 'Start') {
+                myWords.disabled = false;
+                playgames();
+            } else if (this.innerText == "Done") {
+                myWords.disabled = true;
+                btn.innerText = "Start";
+                endplay();
+            }
+
+        })
+
+    </script>
+
+</body>
+
+</html>
